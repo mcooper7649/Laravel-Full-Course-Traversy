@@ -1,5 +1,5 @@
 {
-    "version": 8,
+    "version": 2,
     "framework": null,
 
     "functions": {
@@ -15,7 +15,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://laragigs-coop.vercel.app",
+        "APP_URL": "laragigs-nine.vercel.app",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
