@@ -93,8 +93,19 @@ class ListingController extends Controller
 
     public function destroy(Listing $listing)
     {
+
+        if ($listing->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
         $listing->delete();
 
         return redirect('/')->with('message', 'Listing deleted successfully!');
+    }
+
+    // Manage Listings
+
+    public function manage()
+    {
+        return view('listings.manage', ['listings' => auth()->user()->listings()->get()]);
     }
 }
