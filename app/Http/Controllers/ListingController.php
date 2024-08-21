@@ -45,6 +45,7 @@ class ListingController extends Controller
             'tags' => 'required',
             'description' => 'required',
         ]);
+        $formFields['user_id'] = auth()->id();
 
         if ($request->hasFile('logo')) {
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
@@ -61,16 +62,20 @@ class ListingController extends Controller
         return view('listings.edit', ['listing' => $listing]);
     }
 
-    //Update listing
-
+    // Update Listing Data
     public function update(Request $request, Listing $listing)
     {
-        $formFields = request()->validate([
+        // Make sure logged in user is owner
+        if ($listing->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
+        $formFields = $request->validate([
             'title' => 'required',
             'company' => ['required'],
             'location' => 'required',
-            'email' => ['required', 'email'],
             'website' => 'required',
+            'email' => ['required', 'email'],
             'tags' => 'required',
             'description' => 'required',
         ]);
