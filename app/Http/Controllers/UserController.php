@@ -8,13 +8,13 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    //Show register/create form
+    // Show Register/Create Form
     public function create()
     {
         return view('users.register');
     }
 
-    //Create new user
+    // Create New User
     public function store(Request $request)
     {
         $formFields = $request->validate([
@@ -23,19 +23,19 @@ class UserController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
 
-        //Hash password
+        // Hash Password
         $formFields['password'] = bcrypt($formFields['password']);
 
-        //Create user
+        // Create User
         $user = User::create($formFields);
 
-        //Login
+        // Login
         auth()->login($user);
 
         return redirect('/')->with('message', 'User created and logged in');
     }
 
-    //Logout user
+    // Logout User
     public function logout(Request $request)
     {
         auth()->logout();
@@ -44,15 +44,16 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('message', 'You have been logged out!');
+
     }
 
-    //Show login form
+    // Show Login Form
     public function login()
     {
         return view('users.login');
     }
 
-    //Authenticate user
+    // Authenticate User
     public function authenticate(Request $request)
     {
         $formFields = $request->validate([
@@ -66,6 +67,6 @@ class UserController extends Controller
             return redirect('/')->with('message', 'You are now logged in!');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
+        return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 }
